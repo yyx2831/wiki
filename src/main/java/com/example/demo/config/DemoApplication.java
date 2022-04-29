@@ -1,10 +1,13 @@
-package com.example.demo;
+package com.example.demo.config;
 
 import org.slf4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
+//@ComponentScan({ "com.example.demo", "com.example.demo.config" }) //多个包名写法
+@ComponentScan({ "com.example.demo" })
 @SpringBootApplication
 public class DemoApplication {
 
