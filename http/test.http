@@ -1,0 +1,44 @@
+// 结果验证脚本
+GET http://localhost:8080/test
+Accept: application/json
+
+> {%
+ client.test('test', function(err, data) {
+   if (err) {
+     client.log(err);
+   } else {
+     client.log(data);
+     client.log('测试接口test成功');
+     client.log(response.body);
+     client.log(JSON.stringify(response.body));
+   }
+ })
+ %}
+###
+GET http://localhost:8080/test
+Accept: application/json
+###
+// 带参数的get请求
+GET http://localhost:8080/test?name=test&age=18
+Accept: application/json
+###
+// 带参数的post请求
+POST http://localhost:8080/test/post
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "test",
+    "age": 18
+}
+###
+# 带参数的post请求
+POST http://localhost:8080/test/post
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+name=test&age=18
+
+###
+GET http://localhost:8080/test/list
+###
