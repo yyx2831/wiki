@@ -14,15 +14,7 @@ export default defineComponent({
   components: {
     TheHeader,
     TheFooter
-  },
-  setup() {
-    return {
-      selectedKeys1: ref<string[]>(['2']),
-      selectedKeys2: ref<string[]>(['1']),
-      collapsed: ref<boolean>(false),
-      openKeys: ref<string[]>(['sub1']),
-    };
-  },
+  }
 });
 </script>
 

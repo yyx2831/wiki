@@ -1,5 +1,5 @@
 // 结果验证脚本
-GET http://localhost:8080/test
+GET http://localhost:8880/test
 Accept: application/json
 
 > {%
@@ -15,15 +15,15 @@ Accept: application/json
  })
  %}
 ###
-GET http://localhost:8080/test
+GET http://localhost:8880/test
 Accept: application/json
 ###
 // 带参数的get请求
-GET http://localhost:8080/test?name=test&age=18
+GET http://localhost:8880/test?name=test&age=18
 Accept: application/json
 ###
 // 带参数的post请求
-POST http://localhost:8080/test/post
+POST http://localhost:8880/test/post
 Accept: application/json
 Content-Type: application/json
 
@@ -33,12 +33,12 @@ Content-Type: application/json
 }
 ###
 # 带参数的post请求
-POST http://localhost:8080/test/post
+POST http://localhost:8880/test/post
 Accept: application/json
 Content-Type: application/x-www-form-urlencoded
 
 name=test&age=18
 
 ###
-GET http://localhost:8080/test/list
+GET http://localhost:8880/test/list
 ###

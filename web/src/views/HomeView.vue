@@ -2,15 +2,13 @@
   <a-layout>
     <a-layout-sider width="200" style="background: #fff">
       <a-menu
-          v-model:selectedKeys="selectedKeys2"
-          v-model:openKeys="openKeys"
           mode="inline"
           :style="{ height: '100%', borderRight: 0 }"
       >
         <a-sub-menu key="sub1">
           <template #title>
               <span>
-                <user-outlined />
+                <user-outlined/>
                 subnav 1
               </span>
           </template>
@@ -22,7 +20,7 @@
         <a-sub-menu key="sub2">
           <template #title>
               <span>
-                <laptop-outlined />
+                <laptop-outlined/>
                 subnav 2
               </span>
           </template>
@@ -34,7 +32,7 @@
         <a-sub-menu key="sub3">
           <template #title>
               <span>
-                <notification-outlined />
+                <notification-outlined/>
                 subnav 3
               </span>
           </template>
@@ -54,18 +52,40 @@
       <a-layout-content
           :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
       >
-        Content
+        <pre>
+<!--          {{ebooks}}-->
+          {{books}}
+        </pre>
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent, onMounted, reactive, ref, toRef} from 'vue';
+import axios from 'axios';
 
 export default defineComponent({
   name: 'HomeView',
-  components: {
-  },
+  components: {},
+  setup() {
+    const ebooks = ref();
+    const ebooks1 = reactive({
+      books: []
+    });
+    onMounted(() => { // onMounted is a Vue.js lifecycle hook (onMounted 是一个 Vue.js 生命周期钩子)
+      console.log('mounted');
+      axios.get('http://localhost:8880/ebook/list').then(res => {
+        const data = res.data;
+        ebooks.value = data.content
+        ebooks1.books = data.content
+        console.log('yyx', res);
+      });
+    });
+    return {
+      ebooks,
+      books : toRef(ebooks1, "books")
+    }
+  }
 });
 </script>
