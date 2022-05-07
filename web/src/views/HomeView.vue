@@ -52,10 +52,38 @@
       <a-layout-content
           :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
       >
-        <pre>
-<!--          {{ebooks}}-->
-          {{books}}
-        </pre>
+        <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
+          <template #footer>
+            <div>
+              <b>ant design vue</b>
+              footer part
+            </div>
+          </template>
+          <template #renderItem="{ item }">
+            <a-list-item key="item.title">
+              <template #actions>
+          <span v-for="{ type, text } in actions" :key="type">
+            <component :is="type" style="margin-right: 8px" />
+            {{ text }}
+          </span>
+              </template>
+              <template #extra>
+                <img
+                    width="272"
+                    alt="logo"
+                    src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                />
+              </template>
+              <a-list-item-meta :description="item.description">
+                <template #title>
+                  <a :href="item.href">{{ item.title }}</a>
+                </template>
+                <template #avatar><a-avatar :src="item.avatar" /></template>
+              </a-list-item-meta>
+              {{ item.content }}
+            </a-list-item>
+          </template>
+        </a-list>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -65,6 +93,19 @@
 import {defineComponent, onMounted, reactive, ref, toRef} from 'vue';
 import axios from 'axios';
 
+const listData: Record<string, string>[] = [];
+for (let i = 0; i < 23; i++) {
+  listData.push({
+    href: 'https://www.antdv.com/',
+    title: `ant design vue part ${i}`,
+    avatar: 'https://joeschmoe.io/api/v1/random',
+    description:
+        'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+    content:
+        'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+  });
+}
+
 export default defineComponent({
   name: 'HomeView',
   components: {},
@@ -73,18 +114,63 @@ export default defineComponent({
     const ebooks1 = reactive({
       books: []
     });
+    const pagination = {
+      onChange: (page: number) => {
+        console.log(page);
+      },
+      pageSize: 3,
+    };
+    const actions: Record<string, string>[] = [
+      { type: 'StarOutlined', text: '156' },
+      { type: 'LikeOutlined', text: '156' },
+      { type: 'MessageOutlined', text: '2' },
+    ];
     onMounted(() => { // onMounted is a Vue.js lifecycle hook (onMounted 是一个 Vue.js 生命周期钩子)
       console.log('mounted');
       axios.get('http://localhost:8880/ebook/list').then(res => {
         const data = res.data;
         ebooks.value = data.content
         ebooks1.books = data.content
-        console.log('yyx', res);
+        console.log('yyx2333', res);
+        // lisData = [
+      //   {
+      //     "href": "https://www.antdv.com/",
+      //       "title": "ant design vue part 0",
+      //       "avatar": "https://joeschmoe.io/api/v1/random",
+      //       "description": "Ant Design, a design language for background applications, is refined by Ant UED Team.",
+      //       "content": "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently."
+      //   }
+      // ]
+        // res.data = {
+      //   "success": true,
+      //       "message": null,
+      //       "content": {
+      //     "total": 5,
+      //         "list": [
+      //       {
+      //         "id": 1,
+      //         "name": "Spring Boot 入门教程",
+      //         "category1Id": null,
+      //         "category2Id": null,
+      //         "description": "零基础入门 Java 开发，企业级应用开发最佳首选框架",
+      //         "cover": null,
+      //         "docCount": 0,
+      //         "viewCount": 0,
+      //         "voteCount": 0
+      //       }
+      //     ]
+      //   }
+      // }
+        // 把res.data.content.list赋值给listData
+
       });
     });
     return {
       ebooks,
-      books : toRef(ebooks1, "books")
+      books : toRef(ebooks1, "books"),
+      listData,
+      pagination,
+      actions
     }
   }
 });
