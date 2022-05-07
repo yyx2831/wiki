@@ -33,10 +33,10 @@ public class EbookService {
     public PageResp<EbookQueryResp> list(EbookQueryReq req) {
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
-        if (!ObjectUtils.isEmpty(req.getName())) {
+        if (!ObjectUtils.isEmpty(req.getName())) { // name有值就查询name
             criteria.andNameLike("%" + req.getName() + "%");
         }
-        if (!ObjectUtils.isEmpty(req.getCategoryId2())) {
+        if (!ObjectUtils.isEmpty(req.getCategoryId2())) { // categoryId2有值就查询categoryId2
             criteria.andCategory2IdEqualTo(req.getCategoryId2());
         }
         PageHelper.startPage(req.getPage(), req.getSize());
