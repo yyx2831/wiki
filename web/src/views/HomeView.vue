@@ -102,7 +102,7 @@ export default defineComponent({
     ];
     onMounted(() => { // onMounted is a Vue.js lifecycle hook (onMounted 是一个 Vue.js 生命周期钩子)
       console.log('mounted');
-      axios.get('http://localhost:8880/ebook/list').then(res => {
+      axios.get(process.env.VUE_APP_SERVER + '/ebook/list').then(res => {
         const data = res.data;
         ebooks.value = data.content.list;
         ebooks1.books = data.content;
