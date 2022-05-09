@@ -17,6 +17,7 @@ module.exports = {
     'vue/no-unused-components': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
-    'vue/multi-word-component-names': "off"
+    'vue/multi-word-component-names': "off",
+    'vue/no-unused-vars': "off"
   }
 }
