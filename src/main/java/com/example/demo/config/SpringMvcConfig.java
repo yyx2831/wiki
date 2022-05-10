@@ -20,7 +20,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns(
+                .excludePathPatterns( // 排除不需要拦截的路径
                         "/test/**",
                         "/redis/**",
                         "/user/login",
@@ -29,13 +29,16 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/doc/all/**",
                         "/doc/vote/**",
                         "/doc/find-content/**",
-                        "/ebook-snapshot/**"
-                );
-
-        registry.addInterceptor(actionInterceptor)
-                .addPathPatterns(
+                        "/ebook-snapshot/**",
                         "/*/save",
                         "/*/delete/**",
-                        "/*/reset-password");
+                        "/*/reset-password"
+                );
+
+//        registry.addInterceptor(actionInterceptor)
+//                .addPathPatterns( // 需要拦截的路径
+//                        "/*/save",
+//                        "/*/delete/**",
+//                        "/*/reset-password");
     }
 }

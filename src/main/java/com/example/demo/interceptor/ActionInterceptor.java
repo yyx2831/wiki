@@ -35,16 +35,16 @@ public class ActionInterceptor implements HandlerInterceptor {
             // admin用户不拦截
             return true;
         }
-
-        LOG.info("操作被拦截");
-        response.setStatus(HttpStatus.OK.value());
-        CommonResp commonResp = new CommonResp();
-        commonResp.setSuccess(false);
-        commonResp.setMessage("哈哈，操作被拦截了，你就当操作成功了！示例网站暂不开放增删改操作");
-        response.setContentType("application/json;charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().print(JSONObject.toJSON(commonResp));
-        return false;
+        return true;
+//        LOG.info("操作被拦截");
+//        response.setStatus(HttpStatus.OK.value());
+//        CommonResp commonResp = new CommonResp();
+//        commonResp.setSuccess(false);
+//        commonResp.setMessage("哈哈，操作被拦截了，你就当操作成功了！示例网站暂不开放增删改操作");
+//        response.setContentType("application/json;charset=UTF-8");
+//        response.setCharacterEncoding("UTF-8");
+//        response.getWriter().print(JSONObject.toJSON(commonResp));
+//        return false;
     }
 
 }

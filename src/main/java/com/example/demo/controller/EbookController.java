@@ -35,8 +35,8 @@ public class EbookController {
 
     @DeleteMapping("/delete/{id}")
     public CommonResp delete(@PathVariable Long id) { // @PathVariable 表示请求参数是一个路径变量
-        CommonResp resp = new CommonResp<>();
-        ebookService.delete(id);
-        return resp;
+        CommonResp resp = new CommonResp<>(); // 创建返回对象
+        ebookService.delete(id);            // 调用服务
+        return resp; // 返回结果
     }
 }
