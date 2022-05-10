@@ -43,6 +43,33 @@
         </a-table>
       </a-layout-content>
     </a-layout>
+
+    <a-modal
+        title="电子书表单"
+        v-model:visible="modalVisible"
+        :confirm-loading="modalLoading"
+        @ok="handleModalOk"
+    >
+      <a-form :model="ebook" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+        <a-form-item label="封面">
+          <a-input v-model:value="ebook.cover" />
+        </a-form-item>
+        <a-form-item label="名称">
+          <a-input v-model:value="ebook.name" />
+        </a-form-item>
+        <a-form-item label="分类">
+          <a-cascader
+              v-model:value="categoryIds"
+              :field-names="{ label: 'name', value: 'id', children: 'children' }"
+              :options="level1"
+          />
+        </a-form-item>
+        <a-form-item label="描述">
+          <a-input v-model:value="ebook.description" type="textarea" />
+        </a-form-item>
+      </a-form>
+    </a-modal>
+
   </a-layout>
 </template>
 
@@ -139,6 +166,45 @@ export default {
         }
       });
     };
+
+    // -------- 表单 ---------
+    /**
+     * 数组，[100, 101]对应：前端开发 / Vue
+     */
+    const categoryIds = ref();
+    const ebook = ref();
+    const modalVisible = ref(false);
+    const modalLoading = ref(false);
+    const handleModalOk = () => {
+      modalLoading.value = true;
+      ebook.value.category1Id = categoryIds.value[0];
+      ebook.value.category2Id = categoryIds.value[1];
+      axios.post("/ebook/save", ebook.value).then((response) => {
+        modalLoading.value = false;
+        const data = response.data; // data = commonResp
+        if (data.success) {
+          modalVisible.value = false;
+
+          // 重新加载列表
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize,
+          });
+        } else {
+          message.error(data.message);
+        }
+      });
+    };
+
+    /**
+     * 编辑
+     */
+    const edit = (record: any) => {
+      modalVisible.value = true;
+      ebook.value = Tool.copy(record);
+      categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
+    };
+
     /**
      * 表格点击页码时触发
      */
@@ -203,7 +269,12 @@ export default {
       param,
       handleTableChange,
       getCategoryName,
-      handleDelete
+      handleDelete,
+      modalVisible,
+      modalLoading,
+      handleModalOk,
+      ebook,
+      edit
     }
   }
 }

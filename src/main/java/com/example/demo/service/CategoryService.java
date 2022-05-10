@@ -30,10 +30,10 @@ public class CategoryService {
     @Resource
     private SnowFlake snowFlake;
 
-    public List<CategoryQueryResp> all() {
-        CategoryExample categoryExample = new CategoryExample();
-        categoryExample.setOrderByClause("sort asc");
-        List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
+    public List<CategoryQueryResp> all() { // 获取全部分类
+        CategoryExample categoryExample = new CategoryExample(); // 创建CategoryExample对象
+        categoryExample.setOrderByClause("sort asc"); // 设置排序条件
+        List<Category> categoryList = categoryMapper.selectByExample(categoryExample); // 调用mapper层方法
 
         // 列表复制
         List<CategoryQueryResp> list = CopyUtil.copyList(categoryList, CategoryQueryResp.class);

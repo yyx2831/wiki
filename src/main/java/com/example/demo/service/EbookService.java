@@ -34,17 +34,17 @@ public class EbookService {
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         if (!ObjectUtils.isEmpty(req.getName())) { // name有值就查询name
-            criteria.andNameLike("%" + req.getName() + "%");
+            criteria.andNameLike("%" + req.getName() + "%"); // 模糊查询
         }
         if (!ObjectUtils.isEmpty(req.getCategoryId2())) { // categoryId2有值就查询categoryId2
-            criteria.andCategory2IdEqualTo(req.getCategoryId2());
+            criteria.andCategory2IdEqualTo(req.getCategoryId2()); // 精确查询
         }
-        PageHelper.startPage(req.getPage(), req.getSize());
+        PageHelper.startPage(req.getPage(), req.getSize()); // 分页
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
 
-        PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);
-        LOG.info("总行数：{}", pageInfo.getTotal());
-        LOG.info("总页数：{}", pageInfo.getPages());
+        PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList); // 获取分页信息
+        LOG.info("总行数：{}", pageInfo.getTotal()); // 总行数
+        LOG.info("总页数：{}", pageInfo.getPages()); // 总页数
 
         // List<EbookResp> respList = new ArrayList<>();
         // for (Ebook ebook : ebookList) {

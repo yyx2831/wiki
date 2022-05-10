@@ -19,11 +19,11 @@ public class CategoryController {
     @Resource
     private CategoryService categoryService;
 
-    @GetMapping("/all")
-    public CommonResp all() {
-        CommonResp<List<CategoryQueryResp>> resp = new CommonResp<>();
-        List<CategoryQueryResp> list = categoryService.all();
-        resp.setContent(list);
+    @GetMapping("/all") // 获取全部分类
+    public CommonResp all() { // 返回类型为CommonResp
+        CommonResp<List<CategoryQueryResp>> resp = new CommonResp<>(); // 创建CommonResp对象
+        List<CategoryQueryResp> list = categoryService.all(); // 调用service层方法
+        resp.setContent(list); // 设置返回内容
         return resp;
     }
 
