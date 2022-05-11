@@ -70,10 +70,18 @@ public class EbookService {
      * 保存
      */
     public void save(EbookSaveReq req) {
+        LOG.info("------------- EbookService.save 开始 -------------");
+        LOG.info("请求参数：{}", req);
         Ebook ebook = CopyUtil.copy(req, Ebook.class);
         if (ObjectUtils.isEmpty(req.getId())) {
             // 新增
             ebook.setId(snowFlake.nextId()); // 设置id
+            // doc_count不能为空
+            ebook.setDocCount(1);
+            // view_count不能为空
+            ebook.setViewCount(1);
+            // vote_count不能为空
+            ebook.setVoteCount(1);
             ebookMapper.insert(ebook); // 插入
         } else {
             // 更新

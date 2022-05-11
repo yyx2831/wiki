@@ -11,9 +11,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 // @ComponentScan({"com.jiawa", "com.test"})
-@ComponentScan("com.jiawa")
+@ComponentScan("com.example")
 @SpringBootApplication
-@MapperScan("com.jiawa.wiki.mapper")
+@MapperScan("com.example.demo.mapper")
 @EnableScheduling
 @EnableAsync
 public class WikiApplication {
