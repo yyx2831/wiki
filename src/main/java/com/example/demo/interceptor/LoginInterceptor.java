@@ -27,7 +27,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private RedisTemplate redisTemplate;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception { 
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 打印请求信息
         LOG.info("------------- LoginInterceptor 开始 -------------");
         long startTime = System.currentTimeMillis();
@@ -73,4 +73,3 @@ public class LoginInterceptor implements HandlerInterceptor {
 //        LOG.info("LogInterceptor 结束");
     }
 }
-
