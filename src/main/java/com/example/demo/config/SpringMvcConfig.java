@@ -18,25 +18,25 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     ActionInterceptor actionInterceptor;
 
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(loginInterceptor)
-//                .addPathPatterns("/**") // 拦截所有请求，即使是静态资源，
-//                .excludePathPatterns( // 不拦截的路径
-//                        "/test/**",
-//                        "/redis/**",
-//                        "/user/login",
-//                        "/category/all",
-//                        "/ebook/list",
-//                        "/doc/all/**",
-//                        "/doc/vote/**",
-//                        "/doc/find-content/**",
-//                        "/ebook-snapshot/**",
-//                        "/*/save",
-//                        "/*/delete/**",
-//                        "/*/reset-password"
-//                );
+        registry.addInterceptor(loginInterceptor)
+                .addPathPatterns("/**") // 拦截所有请求，即使是静态资源，
+                .excludePathPatterns( // 不拦截的路径
+                        "/test/**",
+                        "/redis/**",
+                        "/user/login",
+                        "/category/all",
+                        "/ebook/list",
+                        "/doc/all/**",
+                        "/doc/vote/**",
+                        "/doc/find-content/**",
+                        "/ebook-snapshot/**",
+                        "/*/save",
+                        "/*/delete/**",
+                        "/*/reset-password"
+                );
 
 //        registry.addInterceptor(actionInterceptor) // 拦截所有请求，即使是静态资源，
-//                .addPathPatterns( // 拦截的路径
+//                .addPathPatterns(
 //                        "/*/save",
 //                        "/*/delete/**",
 //                        "/*/reset-password");
