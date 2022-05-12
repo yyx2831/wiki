@@ -1,6 +1,10 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Ebook {
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long id;
 
     private String name;

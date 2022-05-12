@@ -74,8 +74,13 @@ public class EbookService {
         LOG.info("请求参数：{}", req);
         Ebook ebook = CopyUtil.copy(req, Ebook.class);
         if (ObjectUtils.isEmpty(req.getId())) {
-            // 新增
-            ebook.setId(snowFlake.nextId()); // 设置id
+            // 生存id，不用雪花算法
+//            ebook.setId(System.currentTimeMillis());
+            long l = snowFlake.nextId();
+            // 把l长度缩短为10位
+            String s = String.valueOf(l);
+            s = s.substring(s.length() - 10);
+            ebook.setId(Long.valueOf(s));
             // doc_count不能为空
             ebook.setDocCount(1);
             // view_count不能为空

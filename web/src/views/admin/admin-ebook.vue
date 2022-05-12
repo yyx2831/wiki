@@ -192,7 +192,7 @@ export default defineComponent({
       // ebook.value.category1Id = categoryIds.value[0];
       // ebook.value.category2Id = categoryIds.value[1];
       // categoryIds.value非空判断
-      if (categoryIds.value.length > 0) {
+      if (categoryIds.value?.length > 0) {
         ebook.value.category1Id = categoryIds.value[0];
         ebook.value.category2Id = categoryIds.value[1];
       }
