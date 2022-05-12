@@ -76,11 +76,12 @@ public class EbookService {
         if (ObjectUtils.isEmpty(req.getId())) {
             // 生存id，不用雪花算法
 //            ebook.setId(System.currentTimeMillis());
-            long l = snowFlake.nextId();
-            // 把l长度缩短为10位
-            String s = String.valueOf(l);
-            s = s.substring(s.length() - 10);
-            ebook.setId(Long.valueOf(s));
+//            long l = snowFlake.nextId();
+//            // 把l长度缩短为10位
+//            String s = String.valueOf(l);
+//            s = s.substring(s.length() - 10);
+//            ebook.setId(Long.valueOf(s));
+            ebook.setId(snowFlake.nextId());
             // doc_count不能为空
             ebook.setDocCount(1);
             // view_count不能为空
