@@ -4,43 +4,24 @@
       <a-menu
           mode="inline"
           :style="{ height: '100%', borderRight: 0 }"
+          @click="handleClick"
+          :openKeys="openKeys"
       >
-        <a-sub-menu key="sub1">
-          <template #title>
-              <span>
-                <user-outlined/>
-                subnav 1
-              </span>
+        <a-menu-item key="welcome">
+          <MailOutlined />
+          <span>欢迎</span>
+        </a-menu-item>
+        <a-sub-menu v-for="item in level1" :key="item.id">
+          <template v-slot:title>
+            <span><user-outlined />{{item.name}}</span>
           </template>
-          <a-menu-item key="1">option1</a-menu-item>
-          <a-menu-item key="2">option2</a-menu-item>
-          <a-menu-item key="3">option3</a-menu-item>
-          <a-menu-item key="4">option4</a-menu-item>
+          <a-menu-item v-for="child in item.children" :key="child.id">
+            <MailOutlined /><span>{{child.name}}</span>
+          </a-menu-item>
         </a-sub-menu>
-        <a-sub-menu key="sub2">
-          <template #title>
-              <span>
-                <laptop-outlined/>
-                subnav 2
-              </span>
-          </template>
-          <a-menu-item key="5">option5</a-menu-item>
-          <a-menu-item key="6">option6</a-menu-item>
-          <a-menu-item key="7">option7</a-menu-item>
-          <a-menu-item key="8">option8</a-menu-item>
-        </a-sub-menu>
-        <a-sub-menu key="sub3">
-          <template #title>
-              <span>
-                <notification-outlined/>
-                subnav 3
-              </span>
-          </template>
-          <a-menu-item key="9">option9</a-menu-item>
-          <a-menu-item key="10">option10</a-menu-item>
-          <a-menu-item key="11">option11</a-menu-item>
-          <a-menu-item key="12">option12</a-menu-item>
-        </a-sub-menu>
+        <a-menu-item key="tip" :disabled="true">
+          <span>以上菜单在分类管理配置</span>
+        </a-menu-item>
       </a-menu>
     </a-layout-sider>
     <a-layout style="padding: 0 24px 24px">
@@ -78,6 +59,8 @@
 <script lang="ts">
 import {defineComponent, onMounted, reactive, ref, toRef} from 'vue';
 import axios from 'axios';
+import {Tool} from "@/util/tool";
+import { message } from 'ant-design-vue';
 
 const listData: Record<string, string>[] = [];
 
@@ -86,9 +69,39 @@ export default defineComponent({
   components: {},
   setup() {
     const ebooks = ref();
+    const level1 =  ref();
+    let categorys: any;
+    const openKeys =  ref();
     const ebooks1 = reactive({
       books: []
     });
+    /**
+     * 查询所有分类
+     **/
+    const handleQueryCategory = () => {
+      axios.get("/category/all").then((response) => {
+        const data = response.data;
+        if (data.success) {
+          categorys = data.content;
+          console.log("原始数组：", categorys);
+
+          // 加载完分类后，将侧边栏全部展开
+          openKeys.value = [];
+          for (let i = 0; i < categorys.length; i++) {
+            openKeys.value.push(categorys[i].id)
+          }
+
+          level1.value = [];
+          level1.value = Tool.array2Tree(categorys, 0);
+          console.log("树形结构：", level1.value);
+
+          // 加载完后再加载电子书，否则如果分类树加载过慢，电子书加载不了
+          handleQuery();
+        } else {
+          message.error(data.message);
+        }
+      });
+    };
     const pagination = {
       onChange: (page: number) => {
         console.log(page);
@@ -100,20 +113,56 @@ export default defineComponent({
       { type: 'LikeOutlined', text: '156' },
       { type: 'MessageOutlined', text: '2' },
     ];
-    onMounted(() => { // onMounted is a Vue.js lifecycle hook (onMounted 是一个 Vue.js 生命周期钩子)
-      console.log('mounted');
-      axios.get(  '/ebook/list').then(res => {
+
+    const isShowWelcome = ref(true);
+    let categoryId2 = 0;
+    const handleQueryEbook = () => {
+      axios.get("/ebook/list", {
+        params: {
+          page: 1,
+          size: 1000,
+          categoryId2: categoryId2
+        }
+      }).then((response) => {
+        const data = response.data;
+        ebooks.value = data.content.list;
+        // ebooks1.books = data.content;
+      });
+    };
+
+    const handleClick = (value: any) => {
+      // console.log("menu click", value)
+      if (value.key === 'welcome') {
+        isShowWelcome.value = true;
+      } else {
+        categoryId2 = value.key;
+        isShowWelcome.value = false;
+        handleQueryEbook();
+      }
+      // isShowWelcome.value = value.key === 'welcome';
+    };
+
+    function handleQuery() {
+      axios.get('/ebook/list').then(res => {
         const data = res.data;
         ebooks.value = data.content.list;
         ebooks1.books = data.content;
       });
+    }
+
+    onMounted(() => { // onMounted is a Vue.js lifecycle hook (onMounted 是一个 Vue.js 生命周期钩子)
+      handleQueryCategory();
+      // handleQuery();
     });
     return {
       ebooks,
       books : toRef(ebooks1, "books"),
       listData,
       pagination,
-      actions
+      actions,
+      handleClick,
+      openKeys,
+      level1
     }
   }
 });
@@ -126,5 +175,8 @@ export default defineComponent({
   line-height: 50px;
   border-radius: 8%;
   margin: 5px 0;
+}
+.ant-layout.ant-layout-has-sider {
+  height: 86vh;
 }
 </style>
