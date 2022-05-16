@@ -7,9 +7,13 @@
           @click="handleClick"
           :openKeys="openKeys"
       >
-        <a-menu-item key="welcome">
-          <MailOutlined />
-          <span>欢迎</span>
+<!--        <a-menu-item key="welcome">-->
+<!--          <MailOutlined />-->
+<!--          <span>欢迎</span>-->
+<!--        </a-menu-item>-->
+        <a-menu-item key="">
+          <a-icon type="appstore" />
+          <span>全部</span>
         </a-menu-item>
         <a-sub-menu v-for="item in level1" :key="item.id">
           <template v-slot:title>
