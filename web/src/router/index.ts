@@ -29,6 +29,11 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       loginRequire: true
     }
+  },
+  {
+    path: '/admin/doc',
+    name: 'AdminDoc',
+    component: () => import('../views/admin/admin-doc.vue'),
   }
 ]
 
