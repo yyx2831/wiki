@@ -127,10 +127,14 @@ public class DocService {
         docMapper.deleteByPrimaryKey(id);
     }
 
+    /**
+     * 查询，根据ids
+     * @param ids 字符串，逗号分隔
+     */
     public void delete(List<String> ids) {
-        DocExample docExample = new DocExample();
-        DocExample.Criteria criteria = docExample.createCriteria();
-        criteria.andIdIn(ids);
+        DocExample docExample = new DocExample(); // new了一个DocExample对象
+        DocExample.Criteria criteria = docExample.createCriteria(); // 创建了一个Criteria对象
+        criteria.andIdIn(ids); // 根据ids查询
         docMapper.deleteByExample(docExample);
     }
 
