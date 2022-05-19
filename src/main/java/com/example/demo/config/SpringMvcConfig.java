@@ -32,7 +32,8 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/ebook-snapshot/**",
                         "/*/save",
                         "/*/delete/**",
-                        "/*/reset-password"
+                        "/*/reset-password",
+                        "/doc/find-content/**"
                 );
 
 //        registry.addInterceptor(actionInterceptor) // 拦截所有请求，即使是静态资源，
