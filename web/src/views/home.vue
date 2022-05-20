@@ -7,20 +7,21 @@
           @click="handleClick"
           :openKeys="openKeys"
       >
-<!--        <a-menu-item key="welcome">-->
-<!--          <MailOutlined />-->
-<!--          <span>欢迎</span>-->
-<!--        </a-menu-item>-->
+        <!--        <a-menu-item key="welcome">-->
+        <!--          <MailOutlined />-->
+        <!--          <span>欢迎</span>-->
+        <!--        </a-menu-item>-->
         <a-menu-item key="">
-          <a-icon type="appstore" />
+          <a-icon type="appstore"/>
           <span>全部</span>
         </a-menu-item>
         <a-sub-menu v-for="item in level1" :key="item.id">
           <template v-slot:title>
-            <span><user-outlined />{{item.name}}</span>
+            <span><user-outlined/>{{ item.name }}</span>
           </template>
           <a-menu-item v-for="child in item.children" :key="child.id">
-            <MailOutlined /><span>{{child.name}}</span>
+            <MailOutlined/>
+            <span>{{ child.name }}</span>
           </a-menu-item>
         </a-sub-menu>
         <a-menu-item key="tip" :disabled="true">
@@ -42,15 +43,20 @@
             <a-list-item key="item.name">
               <template #actions>
           <span v-for="{ type, text } in actions" :key="type">
-            <component :is="type" style="margin-right: 8px" />
+            <component :is="type" style="margin-right: 8px"/>
             {{ text }}
           </span>
               </template>
               <a-list-item-meta :description="item.description">
                 <template #title>
-                  <a :href="item.href">{{ item.name }}</a>
+                  <router-link :to="'/doc?ebookId=' + item.id">
+                      {{ item.name }}
+                  </router-link>
+<!--                  <a :href="item.href">{{ item.name }}</a>-->
                 </template>
-                <template #avatar><a-avatar :src="item.cover" /></template>
+                <template #avatar>
+                  <a-avatar :src="item.cover"/>
+                </template>
               </a-list-item-meta>
             </a-list-item>
           </template>
@@ -64,7 +70,7 @@
 import {defineComponent, onMounted, reactive, ref, toRef} from 'vue';
 import axios from 'axios';
 import {Tool} from "@/util/tool";
-import { message } from 'ant-design-vue';
+import {message} from 'ant-design-vue';
 
 const listData: Record<string, string>[] = [];
 
@@ -73,9 +79,9 @@ export default defineComponent({
   components: {},
   setup() {
     const ebooks = ref();
-    const level1 =  ref();
+    const level1 = ref();
     let categorys: any;
-    const openKeys =  ref();
+    const openKeys = ref();
     const ebooks1 = reactive({
       books: []
     });
@@ -113,9 +119,9 @@ export default defineComponent({
       pageSize: 3,
     };
     const actions: Record<string, string>[] = [
-      { type: 'StarOutlined', text: '156' },
-      { type: 'LikeOutlined', text: '156' },
-      { type: 'MessageOutlined', text: '2' },
+      {type: 'StarOutlined', text: '156'},
+      {type: 'LikeOutlined', text: '156'},
+      {type: 'MessageOutlined', text: '2'},
     ];
 
     const isShowWelcome = ref(true);
@@ -160,7 +166,7 @@ export default defineComponent({
     });
     return {
       ebooks,
-      books : toRef(ebooks1, "books"),
+      books: toRef(ebooks1, "books"),
       listData,
       pagination,
       actions,
@@ -180,6 +186,7 @@ export default defineComponent({
   border-radius: 8%;
   margin: 5px 0;
 }
+
 .ant-layout.ant-layout-has-sider {
   height: 86vh;
 }

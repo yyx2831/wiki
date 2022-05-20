@@ -127,9 +127,8 @@ public class DocService {
         docMapper.deleteByPrimaryKey(id);
     }
 
-    /**
-     * 查询，根据ids
-     * @param ids 字符串，逗号分隔
+    /*
+     * 删除 根据id
      */
     public void delete(List<String> ids) {
         DocExample docExample = new DocExample(); // new了一个DocExample对象
@@ -141,11 +140,11 @@ public class DocService {
     public String findContent(Long id) {
         Content content = contentMapper.selectByPrimaryKey(id);
         // 文档阅读数+1
-        docMapperCust.increaseViewCount(id);
-        if (ObjectUtils.isEmpty(content)) {
+        docMapperCust.increaseViewCount(id); // 这行代码的意思是：查询数据库，将id对应的viewCount+1
+        if (ObjectUtils.isEmpty(content)) { // 如果查询结果为空，则抛出异常
             return "";
         } else {
-            return content.getContent();
+            return content.getContent(); // 如果查询结果不为空，则返回content
         }
     }
 
