@@ -70,7 +70,7 @@ public class UserController {
     @PostMapping("/login")
     public CommonResp login(@Valid @RequestBody UserLoginReq req) {
         req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
-        CommonResp<UserLoginResp> resp = new CommonResp<>();
+        CommonResp<UserLoginResp> resp = new CommonResp<>(); // 返回登录信息
         UserLoginResp userLoginResp = userService.login(req);
 
         Long token = snowFlake.nextId();
