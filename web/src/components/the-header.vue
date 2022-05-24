@@ -70,7 +70,7 @@ export default defineComponent({
   name: 'the-header',
   setup() {
     // 登录后保存
-    const user = computed(() => store.state.user);
+    const user = computed(() => store.state?.user);
 
     // 用来登录
     const loginUser = ref({
