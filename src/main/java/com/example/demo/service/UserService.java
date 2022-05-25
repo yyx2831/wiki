@@ -99,7 +99,7 @@ public class UserService {
     public User selectByLoginName(String LoginName) {
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
-        criteria.andLoginNameEqualTo(LoginName);
+        criteria.andLoginNameEqualTo(LoginName); // 根据用户名查询
         List<User> userList = userMapper.selectByExample(userExample);
         if (CollectionUtils.isEmpty(userList)) {
             return null;

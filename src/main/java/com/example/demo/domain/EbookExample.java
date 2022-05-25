@@ -44,7 +44,7 @@ public class EbookExample {
         return criteria;
     }
 
-    public Criteria createCriteria() { //创建Criteria对象
+    public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {
             oredCriteria.add(criteria);
