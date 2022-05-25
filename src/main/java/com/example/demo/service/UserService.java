@@ -93,7 +93,7 @@ public class UserService {
     }
 
     public void delete(Long id) {
-        userMapper.deleteByPrimaryKey(String.valueOf(id));
+        userMapper.deleteByPrimaryKey(id);
     }
 
     public User selectByLoginName(String LoginName) {

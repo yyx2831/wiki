@@ -25,6 +25,7 @@
                         connectionURL="jdbc:mysql://localhost:3306/wiki?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=CONVERT_TO_NULL&amp;useSSL=false&amp;serverTimezone=CTT&amp;allowMultiQueries=true"
                         userId="root"
                         password="123456">
+            <property name="nullCatalogMeansCurrent" value="true" />
         </jdbcConnection>
 
         <!-- domain类的位置 -->
@@ -40,13 +41,14 @@
                              targetPackage="com.example.demo.mapper"
                              type="XMLMAPPER"/>
 
-        <table tableName="test" domainObjectName="Test"/>
-        <table tableName="demo" domainObjectName="Demo"/>
-        <table tableName="ebook"/>
-        <table tableName="category"/>
-        <table tableName="doc"/>
-        <table tableName="content"/>
-        <table tableName="user"/>
-        <table tableName="ebook_snapshot"/>
+<!--        <table tableName="test" domainObjectName="Test"/>-->
+<!--        <table tableName="demo" domainObjectName="Demo"/>-->
+<!--        <table tableName="ebook"/>-->
+<!--        <table tableName="category"/>-->
+<!--        <table tableName="doc"/>-->
+<!--        <table tableName="content"/>-->
+<!--        <table tableName="user"/>-->
+        <table tableName="user" domainObjectName="User"/>
+<!--        <table tableName="ebook_snapshot"/>-->
     </context>
 </generatorConfiguration>
