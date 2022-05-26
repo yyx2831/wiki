@@ -48,7 +48,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8880/redis/get/206304559894528
+GET http://localhost:8880/redis/get/6330748375040
 Accept: application/json
 
 ###
