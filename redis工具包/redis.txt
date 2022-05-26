@@ -1,0 +1,6 @@
+把redis压缩包拷到c盘根目录解压后重命名为redis，然后运行一下命令启动：
+redis-server.exe redis.windows.conf
+初始密码为空。
+修改密码：config set requirepass 123456
+
+redis-desktop-manager-0.9.3.817.exe为连接redis的桌面工具
