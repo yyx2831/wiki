@@ -43,24 +43,23 @@ public class LoginInterceptor implements HandlerInterceptor {
         LOG.info("接口登录拦截：，path：{}", path);
 
         //获取header的token参数
-//        String token = request.getHeader("token");
-//        LOG.info("登录校验开始，token：{}", token);
-//        if (token == null || token.isEmpty()) {
-//            LOG.info( "token为空，请求被拦截" );
-//            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//            return false;
-//        }
-//        Object object = redisTemplate.opsForValue().get(token);
-//        if (object == null) {
-//            LOG.warn( "token无效，请求被拦截" );
-//            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//            return false;
-//        } else {
-//            LOG.info("已登录：{}", object);
-//            LoginUserContext.setUser(JSON.parseObject((String) object, UserLoginResp.class));
-//            return true;
-//        }
-        return true;
+        String token = request.getHeader("token");
+        LOG.info("登录校验开始，token：{}", token);
+        if (token == null || token.isEmpty()) {
+            LOG.info( "token为空，请求被拦截" );
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            return false;
+        }
+        Object object = redisTemplate.opsForValue().get(token);
+        if (object == null) {
+            LOG.warn( "token无效，请求被拦截" );
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            return false;
+        } else {
+            LOG.info("已登录：{}", object);
+            LoginUserContext.setUser(JSON.parseObject((String) object, UserLoginResp.class));
+            return true;
+        }
     }
 
     @Override
