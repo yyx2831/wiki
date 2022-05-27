@@ -20,7 +20,10 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/admin/ebook',
         name: 'AdminEbook',
-        component: AdminEbook
+        component: AdminEbook,
+        meta: {
+            loginRequire: true
+        }
     },
     {
         path: '/admin/category',
@@ -34,6 +37,9 @@ const routes: Array<RouteRecordRaw> = [
         path: '/admin/doc',
         name: 'AdminDoc',
         component: () => import('../views/admin/admin-doc.vue'),
+        meta: {
+            loginRequire: true
+        }
     },
     {
         path: '/doc',
@@ -44,6 +50,9 @@ const routes: Array<RouteRecordRaw> = [
         path: '/admin/user',
         name: 'AdminUser',
         component: () => import('../views/admin/admin-user.vue'),
+        meta: {
+            loginRequire: true
+        }
     }
 ]
 
