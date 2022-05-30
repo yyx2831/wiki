@@ -133,7 +133,9 @@ public class DocService {
     public void delete(List<String> ids) {
         DocExample docExample = new DocExample(); // new了一个DocExample对象
         DocExample.Criteria criteria = docExample.createCriteria(); // 创建了一个Criteria对象
-        criteria.andIdIn(ids); // 根据ids查询
+//        criteria.andIdIn(ids); // 根据ids查询
+        // ids转换为long
+        List<Long> longIds = CopyUtil.copyList(ids, Long.class);
         docMapper.deleteByExample(docExample);
     }
 
