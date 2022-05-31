@@ -32,7 +32,7 @@ package com.example.demo.job;// package com.jiawa.wiki.job;
 //    public void cron() throws InterruptedException {
 //        SimpleDateFormat formatter = new SimpleDateFormat("mm:ss SSS");
 //        String dateString = formatter.format(new Date());
-//        Thread.sleep(1500);
+//        Thread.sleep(1500); // 模拟耗时操作
 //        LOG.info("每隔1秒钟执行一次： {}", dateString);
 //    }
 //

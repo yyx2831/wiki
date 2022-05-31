@@ -170,6 +170,7 @@ public class DocService {
         // rocketMQTemplate.convertAndSend("VOTE_TOPIC", "【" + docDb.getName() + "】被点赞！");
     }
 
+    // updateEbookInfo的作用是：更新书籍的点赞数、阅读数、评论数
     public void updateEbookInfo() {
         docMapperCust.updateEbookInfo();
     }
