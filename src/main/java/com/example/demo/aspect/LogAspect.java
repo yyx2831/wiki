@@ -31,10 +31,10 @@ public class LogAspect {
     private final static Logger LOG = LoggerFactory.getLogger(LogAspect.class);
 
     /** 定义一个切点 */
-    @Pointcut("execution(public * com.example.*.controller..*Controller.*(..))")
+    @Pointcut("execution(public * com.jiawa.*.controller..*Controller.*(..))")
     public void controllerPointcut() {}
 
-    @Resource
+    @Resource // 注入redisUtil, 可以直接使用，不需要再new
     private SnowFlake snowFlake;
 
     @Before("controllerPointcut()")
@@ -45,7 +45,6 @@ public class LogAspect {
 
         // 开始打印请求日志
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        assert attributes != null;
         HttpServletRequest request = attributes.getRequest();
         Signature signature = joinPoint.getSignature();
         String name = signature.getName();
@@ -60,9 +59,9 @@ public class LogAspect {
 
         // 打印请求参数
         Object[] args = joinPoint.getArgs();
-		// LOG.info("请求参数: {}", JSONObject.toJSONString(args));
+        // LOG.info("请求参数: {}", JSONObject.toJSONString(args));
 
-		Object[] arguments  = new Object[args.length];
+        Object[] arguments  = new Object[args.length];
         for (int i = 0; i < args.length; i++) {
             if (args[i] instanceof ServletRequest
                     || args[i] instanceof ServletResponse
