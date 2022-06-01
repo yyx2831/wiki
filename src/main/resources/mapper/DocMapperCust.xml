@@ -3,7 +3,7 @@
 <mapper namespace="com.example.demo.mapper.DocMapperCust" >
 
     <update id="increaseViewCount">
-        update doc set view_count = view_count + 1 where id = #{id}  # 这行sql语句的意思是：更新doc表中id为#{id}的记录的view_count字段，值为原来的值加1
+        update doc set view_count = view_count + 1 where id = #{id}
     </update>
 
     <update id="increaseVoteCount">

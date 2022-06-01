@@ -18,6 +18,7 @@ import com.example.demo.util.CopyUtil;
 import com.example.demo.util.RedisUtil;
 import com.example.demo.util.RequestContext;
 import com.example.demo.util.SnowFlake;
+import com.example.demo.websocket.WebSocketServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -48,8 +49,11 @@ public class DocService {
     @Resource
     public RedisUtil redisUtil;
 
-//    @Resource
-//    public WsService wsService;
+    @Resource
+    public WebSocketServer WebSocketServer;
+
+    @Resource
+    public WsService wsService;
 
     // @Resource
     // private RocketMQTemplate rocketMQTemplate;
@@ -127,15 +131,10 @@ public class DocService {
         docMapper.deleteByPrimaryKey(id);
     }
 
-    /*
-     * 删除 根据id
-     */
     public void delete(List<String> ids) {
-        DocExample docExample = new DocExample(); // new了一个DocExample对象
-        DocExample.Criteria criteria = docExample.createCriteria(); // 创建了一个Criteria对象
-//        criteria.andIdIn(ids); // 根据ids查询
-        // ids转换为long
-        List<Long> longIds = CopyUtil.copyList(ids, Long.class);
+        DocExample docExample = new DocExample();
+        DocExample.Criteria criteria = docExample.createCriteria();
+        criteria.andIdIn(ids);
         docMapper.deleteByExample(docExample);
     }
 
@@ -166,15 +165,12 @@ public class DocService {
         // 推送消息
         Doc docDb = docMapper.selectByPrimaryKey(id);
         String logId = MDC.get("LOG_ID");
-//        wsService.sendInfo("【" + docDb.getName() + "】被点赞！", logId);
+        wsService.sendInfo("【" + docDb.getName() + "】被点赞！", logId);
         // rocketMQTemplate.convertAndSend("VOTE_TOPIC", "【" + docDb.getName() + "】被点赞！");
     }
 
     // updateEbookInfo的作用是：更新书籍的点赞数、阅读数、评论数
     public void updateEbookInfo() {
         docMapperCust.updateEbookInfo();
-    }
-
-    private class WsService {
     }
 }
