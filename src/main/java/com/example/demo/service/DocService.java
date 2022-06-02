@@ -50,9 +50,6 @@ public class DocService {
     public RedisUtil redisUtil;
 
     @Resource
-    public WebSocketServer WebSocketServer;
-
-    @Resource
     public WsService wsService;
 
     // @Resource
@@ -104,7 +101,7 @@ public class DocService {
     /**
      * 保存
      */
-    @Transactional
+    @Transactional // 事务，提交成功后，才会插入数据
     public void save(DocSaveReq req) {
         Doc doc = CopyUtil.copy(req, Doc.class);
         Content content = CopyUtil.copy(req, Content.class);

@@ -10,12 +10,12 @@ import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-// @ComponentScan({"com.jiawa", "com.test"})
-@ComponentScan("com.example")
-@SpringBootApplication
-@MapperScan("com.example.demo.mapper")
-@EnableScheduling
-@EnableAsync
+// @ComponentScan({"com.jiawa", "com.test"}) // 扫描指定包下的类
+@ComponentScan("com.example") // 扫描包
+@SpringBootApplication // 启动类
+@MapperScan("com.example.demo.mapper") // 扫描mapper
+@EnableScheduling // 开启定时任务
+@EnableAsync // 开启异步任务
 public class WikiApplication {
 
     private static final Logger LOG = LoggerFactory.getLogger(WikiApplication.class);
