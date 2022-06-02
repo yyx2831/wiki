@@ -13,20 +13,20 @@ import java.util.HashMap;
 @Component
 @ServerEndpoint("/ws/{token}")
 public class WebSocketServer {
-    private static final Logger LOG = LoggerFactory.getLogger(WebSocketServer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WebSocketServer.class); // 日志记录器
 
     /**
      * 每个客户端一个token
      */
     private String token = "";
 
-    private static HashMap<String, Session> map = new HashMap<>();
+    private static HashMap<String, Session> map = new HashMap<>(); // 存储每个客户端的session
 
     /**
      * 连接成功
      */
     @OnOpen
-    public void onOpen(Session session, @PathParam("token") String token) {
+    public void onOpen(Session session, @PathParam("token") String token) { // 注解@OnOpen表示当有新的客户端接入时触发此方法
         map.put(token, session);
         this.token = token;
         LOG.info("有新连接：token：{}，session id：{}，当前连接数：{}", token, session.getId(), map.size());
@@ -36,7 +36,7 @@ public class WebSocketServer {
      * 连接关闭
      */
     @OnClose
-    public void onClose(Session session) {
+    public void onClose(Session session) { // 注解@OnClose表示当客户端断开连接时触发此方法
         map.remove(this.token);
         LOG.info("连接关闭，token：{}，session id：{}！当前连接数：{}", this.token, session.getId(), map.size());
     }
@@ -45,7 +45,7 @@ public class WebSocketServer {
      * 收到消息
      */
     @OnMessage
-    public void onMessage(String message, Session session) {
+    public void onMessage(String message, Session session) { // 注解@OnMessage表示当客户端发送过来消息时触发此方法
         LOG.info("收到消息：{}，内容：{}", token, message);
     }
 
@@ -53,7 +53,7 @@ public class WebSocketServer {
      * 连接错误
      */
     @OnError
-    public void onError(Session session, Throwable error) {
+    public void onError(Session session, Throwable error) { // 注解@OnError表示当发生错误时触发此方法
         LOG.error("发生错误", error);
     }
 
@@ -61,10 +61,10 @@ public class WebSocketServer {
      * 群发消息
      */
     public void sendInfo(String message) {
-        for (String token : map.keySet()) {
-            Session session = map.get(token);
+        for (String token : map.keySet()) { // 遍历当前在线用户的token
+            Session session = map.get(token); // 根据token获取session
             try {
-                session.getBasicRemote().sendText(message);
+                session.getBasicRemote().sendText(message); // 发送消息
             } catch (IOException e) {
                 LOG.error("推送消息失败：{}，内容：{}", token, message);
             }
