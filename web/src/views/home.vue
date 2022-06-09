@@ -38,6 +38,9 @@
       <a-layout-content
           :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
       >
+        <div class="welcome" v-show="isShowWelcome">
+          <the-welcome></the-welcome>
+        </div>
         <a-list item-layout="vertical" size="large" :data-source="ebooks" :grid="{ gutter: 20, column: 3 }">
           <template #renderItem="{ item }">
             <a-list-item key="item.name">
@@ -71,12 +74,15 @@ import {defineComponent, onMounted, reactive, ref, toRef} from 'vue';
 import axios from 'axios';
 import {Tool} from "@/util/tool";
 import {message} from 'ant-design-vue';
+import TheWelcome from '@/components/the-welcome.vue';
 
 const listData: Record<string, string>[] = [];
 
 export default defineComponent({
   name: 'HomeView',
-  components: {},
+  components: {
+    TheWelcome
+  },
   setup() {
     const ebooks = ref();
     const level1 = ref();
@@ -112,6 +118,7 @@ export default defineComponent({
         }
       });
     };
+
     const pagination = {
       onChange: (page: number) => {
         console.log(page);
@@ -172,7 +179,8 @@ export default defineComponent({
       actions,
       handleClick,
       openKeys,
-      level1
+      level1,
+      isShowWelcome
     }
   }
 });
